@@ -1,72 +1,88 @@
-GoPhish Auto Deploy
+# GoPhish Auto Deploy
 
-A simple Bash script to automatically deploy GoPhish on an Ubuntu server with HTTPS enabled using Certbot (DNS challenge).
+This project provides a Bash script to automate the deployment of GoPhish on an Ubuntu server.  
+It installs required dependencies, configures HTTPS using Certbot (DNS challenge), updates the GoPhish configuration, and launches the admin interface.
 
-✨ What This Script Does
+---
 
-Updates the system
+## Overview
 
-Installs required packages
+The script automates the following tasks:
 
-Downloads and sets up GoPhish
+- Updates the system
+- Installs required packages
+- Downloads and sets up GoPhish
+- Generates an SSL certificate using Certbot (DNS-based validation)
+- Automatically updates `config.json`
+- Launches GoPhish securely
+- Logs initial admin credentials
 
-Generates SSL certificate (Certbot DNS challenge)
+---
 
-Updates config.json automatically
+## Requirements
 
-Launches GoPhish securely
+- Ubuntu server
+- Root or sudo access
+- A registered domain name
+- Ability to add DNS TXT records
+- Open ports:
+  - `3333` – GoPhish Admin Interface
+  - `80` – Phishing Server
 
-Logs admin credentials
+---
 
-🛠️ Requirements
+## Usage
 
-Ubuntu server
+Clone the repository and run the script:
 
-Root / sudo access
-
-A domain name
-
-Ability to add DNS TXT records
-
-Open ports: 3333, 80
-
-🚀 How to Use
+```bash
 git clone https://github.com/<your-username>/gophish-auto-deploy.git
 cd gophish-auto-deploy
 chmod +x deploy_gophish.sh
 sudo ./deploy_gophish.sh
 
+During Execution
 
-👉 Enter domain name when prompted
-👉 Add _acme-challenge TXT record
-👉 Press Enter to continue
+The script will prompt for:
 
-🔐 Access GoPhish
+Domain name
 
-URL
+DNS TXT record (_acme-challenge) required by Certbot
 
+After adding the DNS TXT record and allowing DNS propagation, press Enter to continue.
+
+Accessing GoPhish
+Admin Interface
 https://your-domain:3333
 
+Login Details
 
-Username: admin
+Username
 
-Password: Check
+admin
+
+
+Temporary Password
 
 /opt/gophish/gophish.log
 
-⚠️ Notes
 
-DNS TXT record is manual
+You will be required to set a new password on first login.
+
+Notes
+
+DNS TXT record creation is manual
 
 Certbot rate limits apply
 
-For learning / lab use only
+Intended for learning, labs, and authorized testing only
 
-👤 Author
+Author
 
 Razzle Mouse
 Cybersecurity | Red Team | Automation
 
-⚠️ Disclaimer
+Disclaimer
 
-For educational and authorized security testing only.
+This project is for educational and authorized security testing purposes only.
+Any misuse of this tool is strictly prohibited.
