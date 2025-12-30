@@ -1,88 +1,39 @@
-# GoPhish Auto Deploy
+# GoPhish Automated Deployment (DigitalOcean + Namecheap)
 
-This project provides a Bash script to automate the deployment of GoPhish on an Ubuntu server.  
-It installs required dependencies, configures HTTPS using Certbot (DNS challenge), updates the GoPhish configuration, and launches the admin interface.
+This repository contains a Python script to automate the deployment of **GoPhish** on an Ubuntu server (DigitalOcean tested), including:
 
----
+- GoPhish installation
+- SSL certificate setup using Certbot (manual DNS challenge)
+- Automatic `config.json` configuration
+- Optional Namecheap DNS automation
 
-## Overview
-
-The script automates the following tasks:
-
-- Updates the system
-- Installs required packages
-- Downloads and sets up GoPhish
-- Generates an SSL certificate using Certbot (DNS-based validation)
-- Automatically updates `config.json`
-- Launches GoPhish securely
-- Logs initial admin credentials
-
----
+## ⚠️ Disclaimer
+This tool is intended **only for authorized security testing, labs, and training**.
+Do NOT use this against systems or users without explicit permission.
 
 ## Requirements
-
-- Ubuntu server
+- Ubuntu 20.04 / 22.04
+- Python 3.8+
 - Root or sudo access
-- A registered domain name
-- Ability to add DNS TXT records
-- Open ports:
-  - `3333` – GoPhish Admin Interface
-  - `80` – Phishing Server
-
----
+- A domain name
+- (Optional) Namecheap API access
 
 ## Usage
 
-Clone the repository and run the script:
-
+### Using environment variables (recommended)
 ```bash
-git clone https://github.com/<your-username>/gophish-auto-deploy.git
-cd gophish-auto-deploy
-chmod +x deploy_gophish.sh
-sudo ./deploy_gophish.sh
+export NAMECHEAP_API_USER="youruser"
+export NAMECHEAP_API_KEY="yourapikey"
+export PUBLIC_IP="your.droplet.ip"
 
-During Execution
+sudo python3 deploy_gophish.py -d example.com
 
-The script will prompt for:
+or
 
-Domain name
+### Using command-line arguments
 
-DNS TXT record (_acme-challenge) required by Certbot
-
-After adding the DNS TXT record and allowing DNS propagation, press Enter to continue.
-
-Accessing GoPhish
-Admin Interface
-https://your-domain:3333
-
-Login Details
-
-Username
-
-admin
-
-
-Temporary Password
-
-/opt/gophish/gophish.log
-
-
-You will be required to set a new password on first login.
-
-Notes
-
-DNS TXT record creation is manual
-
-Certbot rate limits apply
-
-Intended for learning, labs, and authorized testing only
-
-Author
-
-Razzle Mouse
-Cybersecurity | Red Team | Automation
-
-Disclaimer
-
-This project is for educational and authorized security testing purposes only.
-Any misuse of this tool is strictly prohibited.
+sudo python3 deploy_gophish.py \
+  -d example.com \
+  --nc-user NAMECHEAPUSER \
+  --nc-key NAMECHEAPAPIKEY \
+  --client-ip YOUR_DO_PUBLIC_IP
